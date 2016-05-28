@@ -1972,6 +1972,23 @@ exports.Formats = [
 			return -typeMod;
 		},
 	},
+		{
+		name: "Party Furry", 
+ 		section: "Other Metagames", 
+ 
+ 
+ 		searchShow: false, 
+ 		canUseRandomTeam: true, 
+ 		debug: true, 
+ 		maxLevel: 50, 
+ 		defaultLevel: 100, 
+ 		// no restrictions, for serious (other than team preview) 
+ 		ruleset: ['HP Percentage Mod', 'Karrablast', 'Roselia', 'Circle Throw', 'Roar of Time', 'Crunch', 'Low Kick', 'Dark Void', 'Nightmare', 'Substitute', 'Power-Up Punch', 'Thief', 'Earthquake', 
+			'Pursuit', 'Metronome', 'Perish Song', 'Rock Smash', 'Bad Dreams', 'PotD', 'Cancel Mod'], 
+ 		onBegin: function () { 
+ 			if (source.name === 'Karrablast') { 
+ 				this.add('message',Let do it when ' + target.name + ' have a PARTY!!!); 
+ 	}, 
 	{
 		name: "Almost Any Ability",
 		desc: [
