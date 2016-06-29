@@ -559,6 +559,78 @@ exports.Formats = [
 		ruleset: ['Doubles OU'],
 		banlist: ['Kangaskhanite', 'Perish Song'],
 	},
+		{
+		name: "Hyper Extreme Sweep",  
+		section: "Other Metagames",    
+  
+		team: 'HES',  
+		ruleset: ['PotD', 'Pokemon', 'HP Percentage Mod', 'Cancel Mod'],  
+		onBegin: function () {  
+			this.add('message', "Your Blaziken is started to first day.Then Smeargle gonna rage.Wait after getting hit in the next pokemon battle.Complete the sweep before it fail!");  
+ 			this.add("raw|<font color='red'><b>Don't let Smeargle,Blaziken,Medicham and Sawsbuck plus any pokemon is fainted,or you will lose the battle!(Seriously.)</b></font>"); 
+		},  
+		onBeforeMove: function (pokemon, target, move) {  
+			// It can change the weather in 10 time plus 30.  
+ 			if (pokemon.side.battle.turn >= 10 && pokemon.side.battle.hes.drizzle === false) {  
+ 				this.add('-message', "It rain!Make " + pokemon.name + " is on the go!");  
+				} else if (pokemon.side.battle.turn >= 40 || 70 || 100 || 130 || 160 || 190 || 220 || 250 || 280 && pokemon.side.battle.seasonal.drizzle === false) {  
+					this.add('-message', "Something that use Rain Dance again!");  
+				} else if (pokemon.side.battle.turn >= 280 && pokemon.side.battle.seasonal.drizzle === false) {  
+					this.add('-message', "For 10 turn.It all wet already!"); 
+				}  
+ 				this.setWeather('Rain Dance');  
+ 				delete this.weatherData.duration;  
+				pokemon.side.battle.drizzle = true;  
+			}  
+			if (pokemon.side.battle.turn >= 20 && pokemon.side.battle.hes.drought === false) {  
+				this.add('-message', "Let's it fly!The sun is appear!");  
+				} else if (pokemon.side.battle.turn >= 50 || 80 || 60 || 140 || 170 || 200 || 230 || 260 || 290 && pokemon.side.battle.seasonal.drought === false) {  
+					this.add('-message', "Repeat to Sunny Day!It so hot outside!");  
+				} else if (pokemon.side.battle.turn >= 290 && pokemon.side.battle.seasonal.drought === false) {  
+					this.add('-message', "The sun is getting so beautiful!"); 
+				}  
+				this.setWeather('Sunny Day');  
+				delete this.weatherData.duration;  
+				pokemon.side.battle.drought = true;  
+			}  
+			if (!pokemon.side.battle) pokemon.side.battle.seasonal = {'none':false, 'drizzle':false, 'drought':false};  
+			if (pokemon.side.battle.turn >= 30 && pokemon.side.battle.hes.none === false) {  
+				this.add('-message', "IT WORK!!!!!It sky up the world!");  
+				} else if (pokemon.side.battle.turn >=  60 || 90 || 120 || 150 || 180 || 210 || 240 || 270 && pokemon.side.battle.seasonal.drizzle === false) {  
+					this.add('-message', "There is no way to do why the weather is here because of " + pokemon.name + "!");  
+				} else if (pokemon.side.battle.turn >= 300 && pokemon.side.battle.seasonal.drizzle === false) {  
+					this.add('-message', "let's " + pokemon.side.name + " can free before " + pokemon.name + " getting a sweep!"); 
+				}  
+				this.clearWeather();  
+				pokemon.side.battle.none = true;  
+			}  
+		},  
+		onFaint: function (pokemon) {  
+			if (pokemon.template.id === 'smeargle' ||'blaziken' || 'medicham' || 'sawsbuck') {  
+				let winner = 'p1';  
+				if (pokemon.side.id === 'p1') {  
+					winner = 'p2';  
+				}  
+				this.add('-message', "NO!You let " + pokemon.name + " is fainted,trust me.You use someone else " + target.name + ".");  
+				this.add('-message', "Lost  against " + pokemon.side.name + "!);  
+				pokemon.battle.win(winner);  
+			} else if (pokemon.template.id === 'smeargle' ||'blaziken' || 'medicham' || 'sawsbuck' && pokemon.template.id === 'loudred' || 'karrablast' || 'cherrim' || 'ducklett' || 'taillow' || 'lopunny' || 'pignite' || 'sunkern') {  
+				let winner = 'p1';  
+				if (pokemon.side.id === 'p1') {  
+					winner = 'p2';  
+				}  
+				this.add('-message', "NO!You kill 2 pokemon at the same time!You know that mean....fail to get the great sweep ever!");  
+				pokemon.battle.win(winner);  
+			} else if (pokemon.template.id === 'loudred' || 'karrablast' || 'cherrim' || 'ducklett' || 'taillow' || 'lopunny' || 'pignite' || 'sunkern') {  
+				let winner = 'p1';  
+				if (pokemon.side.id === 'p1') {  
+					winner = 'p2';  
+				}  
+				this.add('-message', "NO!You kill 2 time at the same in the row!So...you lose this time " + pokemon.side.name + ".");  
+				pokemon.battle.win(winner);  
+			}  
+		},  
+	},  
 	{
 		name: "Averagemons",
 		desc: [
